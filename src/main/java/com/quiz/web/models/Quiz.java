@@ -1,11 +1,11 @@
 package com.quiz.web.models;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,28 +14,24 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="quiz")
-//the quiz class
+@Table(name = "quiz")
 public class Quiz {
     @Id
-    private long id;
-    @NonNull
-    private String title;
-    private String photoUrl;
-    @Nullable
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+    @Column(name="name")
+    private String name;
+    @Column(name="content")
     private String content;
-    @CreationTimestamp
-    private LocalDateTime createOn;
-    @CreationTimestamp
-    private  LocalDateTime updateOn;
-
-    @ManyToMany
+    @Column(name="photoUrl")
+    private String photoUrl;
+    //many-to-many tables for quiz types
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
-            name = "quiz_category",
-            joinColumns = @JoinColumn(name = "quiz_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private List<Category> categories = new ArrayList<Category>();
-    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Question> questions = new ArrayList<>();
-
+            name = "quiz_type",
+            joinColumns = {@JoinColumn(name = "quiz_id",referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "type_id",referencedColumnName = "id")}
+    )
+    private List<Type> types = new ArrayList<>();
 }
