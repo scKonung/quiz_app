@@ -29,7 +29,9 @@ public class QuizServiceImpl implements QuizService {
     //method to find all quizzes fot actually in database
     @Override
     public List<QuizDto> findAllQuizzes() {
+        //get from Quiz Repository all quizzes
         List<Quiz> quizzes = quizRepository.findAll();
+        //return all quizzes in list wthis mapping to dto
         return quizzes.stream().map((quiz) -> mapToQuizDto(quiz)).collect(Collectors.toList());
     }
 }

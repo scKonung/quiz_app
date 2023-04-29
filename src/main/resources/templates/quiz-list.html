@@ -40,9 +40,16 @@
                             <h5 class="fw-bolder" th:text="${quiz.name}"></h5>
                             Type:
                         </div>
-                        <div class="container" th:each="type :${quiz.types}" >
-                            <!-- Quiz types-->
-                            <p th:text="${type.name}"></p>
+                        <div class="container"  >
+                            <div th:each="type, iStat :${quiz.types}" >
+                            <div class="col ">
+                                <div class="card h-auto float-lg-start m-1 text-center" >
+                                    <!-- Quiz types-->
+                                    <p th:text="${type.name}" class="m-lg-1" th:if="${iStat.count}<4"></p>
+                                    <p class="m-lg-1" th:if="${iStat.count}>3">. . .</p></div>
+
+                            </div>
+                            </div>
                         </div>
                     </div>
                     <!-- Quiz actions-->
