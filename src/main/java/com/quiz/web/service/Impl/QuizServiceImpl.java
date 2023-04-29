@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.quiz.web.mapper.QuizMapper.mapToQuiz;
 import static com.quiz.web.mapper.QuizMapper.mapToQuizDto;
 
 @Service
@@ -33,5 +34,13 @@ public class QuizServiceImpl implements QuizService {
         List<Quiz> quizzes = quizRepository.findAll();
         //return all quizzes in list wthis mapping to dto
         return quizzes.stream().map((quiz) -> mapToQuizDto(quiz)).collect(Collectors.toList());
+    }
+
+    @Override
+    public Quiz saveQuiz(QuizDto quizDto) {
+        //map quizDto to quiz
+        Quiz quiz = mapToQuiz(quizDto);
+        //return a quiz with save in quiz repository
+        return quizRepository.save(quiz);
     }
 }

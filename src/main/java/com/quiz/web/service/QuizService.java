@@ -8,4 +8,6 @@ import java.util.List;
 public interface QuizService {
     //method for find all quizzes
     List<QuizDto> findAllQuizzes();
+    //method for safe new quiz
+    Quiz saveQuiz(QuizDto quizDto);
 }
