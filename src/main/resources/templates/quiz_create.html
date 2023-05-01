@@ -3,23 +3,57 @@
       layout:decorate="~{layout}">
 <head>
     <title>Quiz List</title>
-    <link rel="stylesheet" type="text/css" href="C:\GitHubProfile\web\src\main\resources\static\css\styles.css">
+
 </head>
-<body layout:fragment="body">
-<!-- Header-->
-<header class="masthead py-5">
-    <div class="container px-4 px-lg-5 my-5">
-        <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Find your Quiz</h1>
-            <p class="lead fw-normal text-white-50 mb-0">Explore your possibilities.</p>
-        </div>
-    </div>
-</header>
+<body layout:fragment="body" class="d-flex flex-column h-100">
 <!-- Section-->
 <section  class="py-5">
-
+    <div class="container">
+        <form method="post" th:action="@{/quizzes/new}" th:object="${quiz}">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="name">Name</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            id="name"
+                            name="name"
+                            th:field="*{name}"
+                            placeholder="Name of quiz">
+                </div>
+                <p th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="*{name}"></p>
+            </div>
+            <div class="form-group">
+                <label for="content">Content</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="content"
+                        name="content"
+                        th:field="*{content}"
+                        placeholder="Content of quiz">
+            </div>
+            <p th:if="${#fields.hasErrors('content')}" class="text-danger" th:errors="*{content}"></p>
+            <div class="form-group">
+                <label for="photoUrl">photoUrl</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="photoUrl"
+                        name="photoUrl"
+                        th:field="*{photoUrl}"
+                        placeholder="Url for photo of quiz">
+            </div>
+            <p th:if="${#fields.hasErrors('photoUrl')}" class="text-danger" th:errors="*{photoUrl}"></p>
+            <div class="form-group col-md-4 mb-2" >
+                <p class="mb-0">Select type</p>
+                <select th:field="*{types}" class="form-select-lg" multiple>
+                    <option th:each="type : ${types}" th:value="${type.id}" th:selected="${quiz.types.contains(type)}" th:text="${type.name}"></option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+    </div>
 </section>
-
-<script src="js/scripts.js"></script>
 </body>
 </html>

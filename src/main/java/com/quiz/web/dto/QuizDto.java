@@ -17,13 +17,9 @@ import java.util.List;
 @Builder
 public class QuizDto {
     private Long id;
-    @NotEmpty(message = "Name of quiz should not be empty")
     private String name;
     private String content;
     private String photoUrl;
-    @NotEmpty(message = "You must choose types for quiz")
-    @Min(value = 1)
-    @Max(value = 10)
     private List<Type> types;
 
 }

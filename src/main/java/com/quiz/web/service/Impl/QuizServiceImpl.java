@@ -2,6 +2,7 @@ package com.quiz.web.service.Impl;
 
 import com.quiz.web.dto.QuizDto;
 import com.quiz.web.models.Quiz;
+import com.quiz.web.models.Type;
 import com.quiz.web.repository.QuizRepository;
 import com.quiz.web.repository.TypeRepository;
 import com.quiz.web.service.QuizService;
@@ -35,12 +36,18 @@ public class QuizServiceImpl implements QuizService {
         //return all quizzes in list wthis mapping to dto
         return quizzes.stream().map((quiz) -> mapToQuizDto(quiz)).collect(Collectors.toList());
     }
-
+    //method to save a created quiz in database
     @Override
     public Quiz saveQuiz(QuizDto quizDto) {
         //map quizDto to quiz
         Quiz quiz = mapToQuiz(quizDto);
         //return a quiz with save in quiz repository
         return quizRepository.save(quiz);
+    }
+    //method for find all types of quizzes in database
+    @Override
+    public List<Type> findAllTypes() {
+        //return all types from type repository
+        return typeRepository.findAll();
     }
 }
