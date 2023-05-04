@@ -34,4 +34,7 @@ public class Quiz {
             inverseJoinColumns = {@JoinColumn(name = "type_id",referencedColumnName = "id")}
     )
     private List<Type> types = new ArrayList<>();
+
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.REMOVE)
+    List<Question> questions = new ArrayList<>();
 }

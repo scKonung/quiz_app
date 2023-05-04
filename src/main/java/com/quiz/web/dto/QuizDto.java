@@ -21,5 +21,6 @@ public class QuizDto {
     private String content;
     private String photoUrl;
     private List<Type> types;
+    private  List<QuestionDto> questions;
 
 }
