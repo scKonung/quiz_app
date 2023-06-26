@@ -43,7 +43,7 @@
                     </div>
                     <!-- Quiz actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View</a></div>
+                        <div class="text-center"><a th:href="@{/quizzes/{quizId}(quizId=${quiz.id})}" class="btn btn-outline-dark mt-auto" >View</a></div>
                     </div>
                 </div>
             </div>

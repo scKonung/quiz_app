@@ -9,7 +9,8 @@
 <!-- Section-->
 <section  class="py-5">
     <div class="container">
-        <form method="post" th:action="@{/quizzes/new}" th:object="${quiz}">
+        <form method="post" th:action="@{/quizzes/{quizId}/edit(quizId=${quiz.id})}" th:object="${quiz}">
+            <input type="hidden" th:field="*{id}">
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="name">Name</label>
@@ -51,7 +52,7 @@
                     <option th:each="type : ${types}" th:value="${type.id}" th:selected="${quiz.types.contains(type)}" th:text="${type.name}"></option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Create</button>
+            <button type="submit" class="btn btn-primary">Edit</button>
         </form>
     </div>
 </section>

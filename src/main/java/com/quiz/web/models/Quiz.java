@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,18 +15,15 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "quiz")
 public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
-    @Column(name="name")
     private String name;
-    @Column(name="content")
     private String content;
-    @Column(name="photoUrl")
     private String photoUrl;
+    private LocalDateTime createdOn;
+    private LocalDateTime updateOn;
     //many-to-many tables for quiz types
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
@@ -35,6 +33,4 @@ public class Quiz {
     )
     private List<Type> types = new ArrayList<>();
 
-    @OneToMany(mappedBy = "quiz", cascade = CascadeType.REMOVE)
-    List<Question> questions = new ArrayList<>();
 }

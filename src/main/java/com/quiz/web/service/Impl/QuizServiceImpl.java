@@ -12,15 +12,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.quiz.web.mapper.QuizMapper.mapToQuiz;
-import static com.quiz.web.mapper.QuizMapper.mapToQuizDto;
+import static com.quiz.web.mapper.Mapper.mapToModel;
+import static com.quiz.web.mapper.Mapper.mapToDto;
 
 @Service
 public class QuizServiceImpl implements QuizService {
     //repository for quiz
-    private QuizRepository quizRepository;
+    private final QuizRepository quizRepository;
     //repository for roles
-    private TypeRepository typeRepository;
+    private final TypeRepository typeRepository;
 
     @Autowired
     public QuizServiceImpl(QuizRepository quizRepository, TypeRepository typeRepository ) {
@@ -30,18 +30,20 @@ public class QuizServiceImpl implements QuizService {
 
     //method to find all quizzes fot actually in database
     @Override
-    public List<QuizDto> findAllQuizzes() {
+    public List<QuizDto> findAll() {
         //get from Quiz Repository all quizzes
         List<Quiz> quizzes = quizRepository.findAll();
-        //return all quizzes in list wthis mapping to dto
-        return quizzes.stream().map((quiz) -> mapToQuizDto(quiz)).collect(Collectors.toList());
+        //return all quizzes in list this mapping to dto
+        return quizzes.stream().map((quiz) -> mapToDto(quiz)).collect(Collectors.toList());
     }
+
     //method to save a created quiz in database
     @Override
-    public Quiz saveQuiz(QuizDto quizDto) {
-        //map quizDto to quiz
-        Quiz quiz = mapToQuiz(quizDto);
-        //return a quiz with save in quiz repository
+    public Quiz save(QuizDto quizDto) {
+        Quiz quiz = mapToModel(quizDto);
+        if (quiz.getPhotoUrl().isEmpty())
+            quiz.setPhotoUrl("https://img.freepik.com/free-vector/quiz-word-concept_23-2147844150.jpg?w=2000");
+        //map a dto to database format and save int repository
         return quizRepository.save(quiz);
     }
     //method for find all types of quizzes in database
@@ -49,5 +51,23 @@ public class QuizServiceImpl implements QuizService {
     public List<Type> findAllTypes() {
         //return all types from type repository
         return typeRepository.findAll();
+    }
+    //implementation of method fo find a quiz by id
+    @Override
+    public QuizDto findById(long id) {
+        //return from repository a quiz
+        return mapToDto(quizRepository.findById(id).get());
+    }
+
+    @Override
+    public void update(QuizDto quizDto) {
+        Quiz quiz = mapToModel(quizDto);
+        quizRepository.save(quiz);
+
+    }
+
+    @Override
+    public void delete(long id) {
+        quizRepository.deleteById(id);
     }
 }
