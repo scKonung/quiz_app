@@ -40,6 +40,7 @@ public class QuestionServiceImpl implements QuestionService {
         else throw new QuizNotFoundException(quizId);
     }
 
+
     @Override
     public void create(long quizId, QuestionDto questionDto) {
         Question question = mapToModel(questionDto);
@@ -61,4 +62,17 @@ public class QuestionServiceImpl implements QuestionService {
         else
             throw new QuestionNotFoundException(id);
     }
+
+    @Override
+    public void update(QuestionDto questionDto , long quizId) {
+        Question question = mapToModel(questionDto);
+        question.setQuiz(quizRepository.findById(quizId).get());
+        questionRepository.save(question);
+    }
+
+    @Override
+    public void delete(long id) {
+        questionRepository.deleteById(id);
+    }
+
 }

@@ -6,6 +6,7 @@ import com.quiz.web.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,19 +52,38 @@ public class QuestionController {
         return "question_create";
     }
     @PostMapping("/quiz{quizId}/questions/new")
-    public String create(@PathVariable("quizId")long quizId, @ModelAttribute("question")QuestionDto questionDto) {
+    public String create(@PathVariable("quizId")long quizId,
+                         @ModelAttribute("question")QuestionDto questionDto) {
         questionService.create(quizId,questionDto);
         return "redirect:/quiz"+quizId+"/questions";
     }
 
     //crud update
     @GetMapping("/quiz{quizId}/questions/{questionId}/edit")
-    public String update(@PathVariable("quizId") long quizId, @PathVariable("questionId") long questionId,
+    public String update(@PathVariable("quizId") long quizId,
+                         @PathVariable("questionId") long questionId,
                          Model model){
-        //add to model id of quiz and questiond and question by id
+        //add to model id of quiz and questions and question by id
         model.addAttribute("quizId",quizId);
         model.addAttribute("questionId",questionId);
         model.addAttribute("question",questionService.findById(questionId));
         return "question_edit";
+    }
+    @PostMapping("/quiz{quizId}/questions/{questionId}/edit")
+    public String update(@PathVariable("quizId") long quizId,
+                         @PathVariable("questionId") long questionId,
+                         @ModelAttribute("question") QuestionDto questionDto,
+                         BindingResult result, Model model) {
+        questionDto.setId(questionId);
+        questionService.update(questionDto, quizId);
+        return "redirect:/quiz"+quizId+"/questions";
+    }
+
+    //crud delete
+    @GetMapping("/quiz{quizId}/questions/{questionId}/delete")
+    public String delete(@PathVariable("quizId") long quizId,
+                         @PathVariable("questionId") long questionId) {
+        questionService.delete(questionId);
+        return "redirect:/quiz"+quizId+"/questions";
     }
 }

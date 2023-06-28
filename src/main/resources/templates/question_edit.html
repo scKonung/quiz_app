@@ -9,7 +9,10 @@
 <!-- Section-->
 <section  class="py-5">
     <div class="container">
-        <form method="post" th:action="@{/quiz{quizId}/questions/new(quizId=${quizId})}" th:object="${question}">
+        <form method="post"
+              th:action="@{/quiz{quizId}/questions/{questionId}/edit(quizId=${quizId}, questionId=${questionId})}"
+              th:object="${question}">
+            <input type="hidden" th:field="*{id}">
             <div class="form-row">
                 <div class="form-group col-md-6 mb-1">
                     <label for="title">Title</label>
