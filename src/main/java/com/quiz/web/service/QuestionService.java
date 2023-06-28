@@ -10,4 +10,7 @@ public interface QuestionService {
 
     //method for creatng new questions
     void create(long quizId, QuestionDto questionDto);
+
+    //get question by id
+    QuestionDto findById(long id);
 }

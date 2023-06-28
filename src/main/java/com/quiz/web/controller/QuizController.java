@@ -56,8 +56,7 @@ public class QuizController {
     public String create(@Valid @ModelAttribute("quiz")QuizDto quizDto,
                          BindingResult result, Model model){
         if (result.hasErrors()){
-            model.addAttribute("quiz", quizDto);
-            model.addAttribute("types",quizService.findAllTypes());
+            addQuizAndTypes(model, quizDto);
             return "quiz_create";
         }
         //save object in db
@@ -72,15 +71,19 @@ public class QuizController {
     @GetMapping("/quizzes/{id}/edit")
     public String update(@PathVariable("id")long quizId, Model model) {
         //add to the model an object from db using id
-        model.addAttribute("quiz", quizService.findById(quizId));
         //add types to the model attribute
-        model.addAttribute("types",quizService.findAllTypes());
+        addQuizAndTypes(model,quizService.findById(quizId));
         //direct to edit form
         return "quiz_edit";
     }
     //post request for updating a data
     @PostMapping("/quizzes/{id}/edit")
-    public String update(@PathVariable("id") long quizId, @ModelAttribute("quiz") QuizDto quizDto){
+    public String update(@PathVariable("id") long quizId, @Valid @ModelAttribute("quiz") QuizDto quizDto,
+                         BindingResult result, Model model){
+        if(result.hasErrors()) {
+            addQuizAndTypes(model,quizDto);
+            return "quiz_edit";
+        }
         quizDto.setId(quizId);
         quizService.update(quizDto);
         return "redirect:/quizzes/" + quizId;
@@ -91,6 +94,11 @@ public class QuizController {
     public String delete(@PathVariable("id") long quizId){
         quizService.delete(quizId);
         return "redirect:/quizzes";
+    }
+
+    private void addQuizAndTypes(Model model, QuizDto quizDto){
+        model.addAttribute("quiz",quizDto);
+        model.addAttribute("types",quizService.findAllTypes());
     }
 
 }

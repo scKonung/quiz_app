@@ -12,12 +12,12 @@ import java.util.List;
 @Builder
 public class QuizDto {
     private Long id;
-    @NotEmpty(message = "name of Quiz should not be empty")
+    @NotEmpty(message = "name of quiz should not be empty")
     private String name;
-    @NotEmpty(message = "details of Quiz should not be empty")
+    @NotEmpty(message = "details of quiz should not be empty")
     private String content;
     private String photoUrl;
-    @NotEmpty(message = "types of Quiz should not be empty")
+    @NotEmpty(message = "types of quiz should not be empty")
     private List<Type> types;
     private LocalDateTime createdOn;
     private LocalDateTime updateOn;

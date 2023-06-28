@@ -53,8 +53,17 @@ public class QuestionController {
     @PostMapping("/quiz{quizId}/questions/new")
     public String create(@PathVariable("quizId")long quizId, @ModelAttribute("question")QuestionDto questionDto) {
         questionService.create(quizId,questionDto);
-        return "redirect:/quizzes/" + quizId;
+        return "redirect:/quiz"+quizId+"/questions";
     }
 
     //crud update
+    @GetMapping("/quiz{quizId}/questions/{questionId}/edit")
+    public String update(@PathVariable("quizId") long quizId, @PathVariable("questionId") long questionId,
+                         Model model){
+        //add to model id of quiz and questiond and question by id
+        model.addAttribute("quizId",quizId);
+        model.addAttribute("questionId",questionId);
+        model.addAttribute("question",questionService.findById(questionId));
+        return "question_edit";
+    }
 }

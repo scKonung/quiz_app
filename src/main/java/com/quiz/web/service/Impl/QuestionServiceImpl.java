@@ -1,6 +1,7 @@
 package com.quiz.web.service.Impl;
 
 import com.quiz.web.dto.QuestionDto;
+import com.quiz.web.errors.QuestionNotFoundException;
 import com.quiz.web.errors.QuizNotFoundException;
 import com.quiz.web.mapper.Mapper;
 import com.quiz.web.models.Question;
@@ -10,7 +11,6 @@ import com.quiz.web.repository.QuizRepository;
 import com.quiz.web.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.quiz.web.mapper.Mapper.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,11 +43,22 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public void create(long quizId, QuestionDto questionDto) {
         Question question = mapToModel(questionDto);
+        if (question.getRightAnswerIndex() == null)
+            question.setRightAnswerIndex(0);
         Optional<Quiz> quiz = quizRepository.findById(quizId);
         if (quiz.isPresent()) {
             question.setQuiz(quiz.get());
             questionRepository.save(question);
         } else
             throw new QuizNotFoundException(quizId);
+    }
+
+    @Override
+    public QuestionDto findById(long id) {
+        Optional<Question> question = questionRepository.findById(id);
+        if (question.isPresent())
+            return mapToDto(question.get());
+        else
+            throw new QuestionNotFoundException(id);
     }
 }
