@@ -20,7 +20,7 @@ public class Question {
     private String title;
     @ElementCollection
     private List<String> answers;
-    private String rightAnswer;
+    private Integer rightAnswerIndex;
     @ManyToOne
     @JoinColumn(name = "quiz_id",nullable = false)
     private Quiz quiz;

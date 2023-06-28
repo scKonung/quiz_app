@@ -10,16 +10,31 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class QuestionController {
     private final QuestionService questionService;
+
+
     @Autowired
-    public QuestionController( QuestionService questionService) {
-        this.questionService = questionService;}
+    public QuestionController(QuestionService questionService) {
+        this.questionService = questionService;
+    }
+
+    //crud read
+    @GetMapping("/quiz{quizId}/questions")
+    public String getAll(@PathVariable("quizId") long quizId, Model model) {
+        //get all questions by id in service
+        List<QuestionDto> questionDtos = questionService.getAllByQuizId(quizId);
+        String quizName = questionDtos.get(0).getQuiz().getName();
+        //add list to the model
+        model.addAttribute("questions",questionDtos);
+        model.addAttribute("quizName",quizName);
+        return "question_list";
+    }
+
     //crud create
     @GetMapping("/questions/{clubId}/new")
     public String create(@PathVariable("clubId") long quizId, Model model){

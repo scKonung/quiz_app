@@ -1,4 +1,4 @@
-<html xmlns:th="http://thmyelead.org"
+<html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
@@ -29,7 +29,7 @@
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <a class="btn btn-outline-dark flex-shrink-0" type="button">Start Quiz</a>
                         </div>
-                        <div class="colfs-5 mb-5 ">
+                        <div class="col fs-5 mb-5 ">
                                 <!-- Quiz types-->
                                 <div class="container" >
                                     <div th:each="type :${quiz.types}" >
@@ -43,14 +43,15 @@
                                 </div>
                         </div>
                     </div>
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <a class="btn btn-outline-dark flex-shrink-0" th:href="@{/quizzes/{quizId}/edit(quizId=${quiz.id})}">Edit</a>
-                    </div>
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <a class="btn btn-outline-dark flex-shrink-0" th:href="@{/quizzes/{quizId}/delete(quizId=${quiz.id})}">Delete</a>
-                    </div>
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <a class="btn btn-outline-dark flex-shrink-0" th:href="@{/questions/{quizId}/new(quizId=${quiz.id})}">Add Question</a>
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent mt-1">
+                        <div class="d-flex justify-content-start">
+                            <a class="btn btn-outline-dark flex-shrink-0 mr-1"
+                               th:href="@{/quizzes/{quizId}/edit(quizId=${quiz.id})}">Edit</a>
+                            <a class="btn btn-outline-dark flex-shrink-0 mr-1"
+                               th:href="@{/quizzes/{quizId}/delete(quizId=${quiz.id})}">Delete</a>
+                            <a class="btn btn-outline-dark flex-shrink-0"
+                               th:href="@{/quiz{quizId}/questions(quizId=${quiz.id})}">View Questions</a>
+                        </div>
                     </div>
                 </div>
             </div>

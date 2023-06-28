@@ -12,6 +12,6 @@ public class QuestionDto {
     private Long id;
     private String title;
     private List<String> answers;
-    private String rightAnswer;
+    private Integer rightAnswerIndex;
     private Quiz quiz;
 }
