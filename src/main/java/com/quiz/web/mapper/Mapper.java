@@ -40,7 +40,7 @@ public class Mapper {
         return QuestionDto.builder()
                 .id(question.getId())
                 .title(question.getTitle())
-                .answer(question.getAnswer())
+                .answers(question.getAnswers())
                 .rightAnswer(question.getRightAnswer())
                 .quiz(question.getQuiz())
                 .build();
@@ -51,7 +51,7 @@ public class Mapper {
                 .id(questionDto.getId())
                 .title(questionDto.getTitle())
                 .rightAnswer(questionDto.getRightAnswer())
-                .answer(questionDto.getAnswer())
+                .answers(questionDto.getAnswers())
                 .quiz(questionDto.getQuiz())
                 .build();
     }

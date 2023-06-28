@@ -11,22 +11,32 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class QuestionController {
     private final QuestionService questionService;
     @Autowired
     public QuestionController( QuestionService questionService) {
         this.questionService = questionService;}
-
+    //crud create
     @GetMapping("/questions/{clubId}/new")
     public String create(@PathVariable("clubId") long quizId, Model model){
         Question question = new Question();
+        //make the empty array to add answers in form
+        List<String> answers = new ArrayList<>();
+        for (int j=0;j<=3;j++)
+            answers.add("");
+        question.setAnswers(answers);
+
+        //add to the model object and id
         model.addAttribute("question",question);
         model.addAttribute("quizId",quizId);
         return "question_create";
     }
 
-    @PostMapping("/questions/{quizId}")
+    @PostMapping("/questions/{quizId}/new")
     public String create(@PathVariable("quizId")long quizId, @ModelAttribute("question")QuestionDto questionDto) {
         questionService.create(quizId,questionDto);
         return "redirect:/quizzes/" + quizId;

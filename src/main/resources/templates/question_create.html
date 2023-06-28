@@ -9,10 +9,10 @@
 <!-- Section-->
 <section  class="py-5">
     <div class="container">
-        <form method="post" th:action="@{/questions/{quizId}(quizId=${quizId})}" th:object="${question}">
+        <form method="post" th:action="@{/questions/{quizId}/new(quizId=${quizId})}" th:object="${question}">
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="title">Question</label>
+                    <label for="title">Title</label>
                     <input
                             type="text"
                             class="form-control"
@@ -23,7 +23,16 @@
                 </div>
                 <p th:if="${#fields.hasErrors('title')}" class="text-danger" th:errors="*{title}"></p>
             </div>
-
+            <div th:each="answer, answerStat : *{answers}" class="form-group">
+                <label for="answer">Details</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="answer"
+                        name="answers[__${answerStat.index}__]"
+                        th:field="*{answers[__${answerStat.index}__]}"
+                        placeholder="Make an answer">
+            </div>
             <button type="submit" class="btn btn-primary">Create</button>
         </form>
     </div>

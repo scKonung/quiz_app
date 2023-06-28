@@ -9,9 +9,9 @@ import java.util.List;
 @Data
 @Builder
 public class QuestionDto {
-    private long id;
+    private Long id;
     private String title;
-    private List<String> answer;
+    private List<String> answers;
     private String rightAnswer;
     private Quiz quiz;
 }
