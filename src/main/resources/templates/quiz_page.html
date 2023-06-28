@@ -50,7 +50,11 @@
                             <a class="btn btn-outline-dark flex-shrink-0 mr-1"
                                th:href="@{/quizzes/{quizId}/delete(quizId=${quiz.id})}">Delete</a>
                             <a class="btn btn-outline-dark flex-shrink-0"
-                               th:href="@{/quiz{quizId}/questions(quizId=${quiz.id})}">View Questions</a>
+                               th:href="@{/quiz{quizId}/questions(quizId=${quiz.id})}"
+                               th:if="${quiz.getQuestions().size() > 0}">View Questions</a>
+                            <a class="btn btn-outline-dark flex-shrink-0"
+                               th:href="@{/questions/{quizId}/new(quizId=${quiz.id})}"
+                               th:if="${quiz.getQuestions().size() == 0}">Create First Question</a>
                         </div>
                     </div>
                 </div>

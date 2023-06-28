@@ -36,8 +36,8 @@ public class QuestionController {
     }
 
     //crud create
-    @GetMapping("/questions/{clubId}/new")
-    public String create(@PathVariable("clubId") long quizId, Model model){
+    @GetMapping("/quiz{quizId}/questions/new")
+    public String create(@PathVariable("quizId") long quizId, Model model){
         Question question = new Question();
         //make the empty array to add answers in form
         List<String> answers = new ArrayList<>();
@@ -50,10 +50,11 @@ public class QuestionController {
         model.addAttribute("quizId",quizId);
         return "question_create";
     }
-
-    @PostMapping("/questions/{quizId}/new")
+    @PostMapping("/quiz{quizId}/questions/new")
     public String create(@PathVariable("quizId")long quizId, @ModelAttribute("question")QuestionDto questionDto) {
         questionService.create(quizId,questionDto);
         return "redirect:/quizzes/" + quizId;
     }
+
+    //crud update
 }

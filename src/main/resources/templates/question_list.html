@@ -11,6 +11,11 @@
         <div class="text-center text-dark">
             <h1 class="display-4 fw-bolder" th:text="${quizName}"></h1>
             <p class="lead fw-normal text-dark-50 mb-0">Questions and answers</p>
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            </div>
+        </div>
+        <div class="text-center">
+            <a class="btn btn-outline-dark mt-auto" th:href="@{/quiz{quizId}/questions/new(quizId=${quizId})}">Create new question</a>
         </div>
     </div>
 </header>
@@ -45,7 +50,10 @@
                     </div>
                     <!-- Quiz actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto">View</a></div>
+                        <div class="text-center">
+                            <a class="btn btn-outline-dark mt-auto">Edit</a>
+                            <a class="btn btn-outline-dark mt-auto">Delete</a>
+                        </div>
                     </div>
                 </div>
             </div>
