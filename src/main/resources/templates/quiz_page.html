@@ -49,6 +49,9 @@
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                         <a class="btn btn-outline-dark flex-shrink-0" th:href="@{/quizzes/{quizId}/delete(quizId=${quiz.id})}">Delete</a>
                     </div>
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <a class="btn btn-outline-dark flex-shrink-0" th:href="@{/questions/{quizId}/new(quizId=${quiz.id})}">Add Question</a>
+                    </div>
                 </div>
             </div>
         </section>

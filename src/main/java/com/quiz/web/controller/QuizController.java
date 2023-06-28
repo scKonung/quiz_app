@@ -3,9 +3,11 @@ package com.quiz.web.controller;
 import com.quiz.web.dto.QuizDto;
 import com.quiz.web.models.Quiz;
 import com.quiz.web.service.QuizService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -51,7 +53,13 @@ public class QuizController {
     }
    //post request with created quiz in form
     @PostMapping("/quizzes/new")
-    public String create(@ModelAttribute("quiz")QuizDto quizDto){
+    public String create(@Valid @ModelAttribute("quiz")QuizDto quizDto,
+                         BindingResult result, Model model){
+        if (result.hasErrors()){
+            model.addAttribute("quiz", quizDto);
+            model.addAttribute("types",quizService.findAllTypes());
+            return "quiz_create";
+        }
         //save object in db
         quizService.save(quizDto);
         //redirect to all quizzes page

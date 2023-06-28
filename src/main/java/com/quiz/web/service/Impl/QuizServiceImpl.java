@@ -1,6 +1,8 @@
 package com.quiz.web.service.Impl;
 
 import com.quiz.web.dto.QuizDto;
+import com.quiz.web.errors.QuizNotFoundException;
+import com.quiz.web.mapper.Mapper;
 import com.quiz.web.models.Quiz;
 import com.quiz.web.models.Type;
 import com.quiz.web.repository.QuizRepository;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.quiz.web.mapper.Mapper.mapToModel;
@@ -34,17 +37,17 @@ public class QuizServiceImpl implements QuizService {
         //get from Quiz Repository all quizzes
         List<Quiz> quizzes = quizRepository.findAll();
         //return all quizzes in list this mapping to dto
-        return quizzes.stream().map((quiz) -> mapToDto(quiz)).collect(Collectors.toList());
+        return quizzes.stream().map(Mapper::mapToDto).collect(Collectors.toList());
     }
 
     //method to save a created quiz in database
     @Override
-    public Quiz save(QuizDto quizDto) {
+    public void save(QuizDto quizDto) {
         Quiz quiz = mapToModel(quizDto);
         if (quiz.getPhotoUrl().isEmpty())
             quiz.setPhotoUrl("https://img.freepik.com/free-vector/quiz-word-concept_23-2147844150.jpg?w=2000");
         //map a dto to database format and save int repository
-        return quizRepository.save(quiz);
+        quizRepository.save(quiz);
     }
     //method for find all types of quizzes in database
     @Override
@@ -55,8 +58,11 @@ public class QuizServiceImpl implements QuizService {
     //implementation of method fo find a quiz by id
     @Override
     public QuizDto findById(long id) {
-        //return from repository a quiz
-        return mapToDto(quizRepository.findById(id).get());
+        Optional<Quiz> quiz = quizRepository.findById(id);
+        if (quiz.isPresent())
+            return mapToDto(quiz.get());
+        else
+            throw new QuizNotFoundException(id);
     }
 
     @Override

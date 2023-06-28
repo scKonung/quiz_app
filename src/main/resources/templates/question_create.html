@@ -1,0 +1,32 @@
+<html xmlns:th="http://thmyelead.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Quiz Create</title>
+
+</head>
+<body layout:fragment="body" class="d-flex flex-column h-100">
+<!-- Section-->
+<section  class="py-5">
+    <div class="container">
+        <form method="post" th:action="@{/questions/{quizId}(quizId=${quizId})}" th:object="${question}">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="title">Question</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            id="title"
+                            name="title"
+                            th:field="*{title}"
+                            placeholder="What's question?">
+                </div>
+                <p th:if="${#fields.hasErrors('title')}" class="text-danger" th:errors="*{title}"></p>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+    </div>
+</section>
+</body>
+</html>

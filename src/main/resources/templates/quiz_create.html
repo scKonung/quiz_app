@@ -50,6 +50,7 @@
                 <select th:field="*{types}" class="form-select-lg" multiple>
                     <option th:each="type : ${types}" th:value="${type.id}" th:selected="${quiz.types.contains(type)}" th:text="${type.name}"></option>
                 </select>
+                <p th:if="${#fields.hasErrors('types')}" class="text-danger" th:errors="*{types}"></p>
             </div>
             <button type="submit" class="btn btn-primary">Create</button>
         </form>

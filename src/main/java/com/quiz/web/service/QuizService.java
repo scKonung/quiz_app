@@ -10,7 +10,7 @@ public interface QuizService {
     //method for find all quizzes
     List<QuizDto> findAll();
     //method for safe new quiz
-    Quiz save(QuizDto quizDto);
+    void save(QuizDto quizDto);
     //method for find all
     // types of quizzes
     List<Type> findAllTypes();
