@@ -19,4 +19,5 @@ public interface QuestionService {
 
     //delete method
     void delete(long id);
+
 }

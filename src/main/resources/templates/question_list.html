@@ -22,6 +22,7 @@
 <!-- Section-->
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
+        <p class="col mb-5 text-center no-found-text" th:if="${questions.isEmpty()}">Here doesn't any question:(</p>
         <div class="row gx-4 gx-lg-5">
             <div th:each="question : ${questions}" class="col mb-5">
                 <div class="card h-auto">

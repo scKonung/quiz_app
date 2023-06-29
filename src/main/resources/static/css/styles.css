@@ -10897,3 +10897,27 @@ header.masthead .bg-circle-4 {
   font-size: 1.2rem;
   text-align: center;
 }
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+.quiz-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  margin-top: 50px;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.answer-btn {
+  margin-top: 10px;
+}
+
+#next-btn {
+  margin-top: 20px;
+}

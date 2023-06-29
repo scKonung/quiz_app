@@ -3,6 +3,7 @@ package com.quiz.web.controller;
 import com.quiz.web.dto.QuestionDto;
 import com.quiz.web.models.Question;
 import com.quiz.web.service.QuestionService;
+import com.quiz.web.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,11 +18,13 @@ import java.util.List;
 @Controller
 public class QuestionController {
     private final QuestionService questionService;
+    private final QuizService quizService;
 
 
     @Autowired
-    public QuestionController(QuestionService questionService) {
+    public QuestionController(QuestionService questionService, QuizService quizService) {
         this.questionService = questionService;
+        this.quizService = quizService;
     }
 
     //crud read
@@ -29,7 +32,7 @@ public class QuestionController {
     public String getAll(@PathVariable("quizId") long quizId, Model model) {
         //get all questions by id in service
         List<QuestionDto> questionDtos = questionService.getAllByQuizId(quizId);
-        String quizName = questionDtos.get(0).getQuiz().getName();
+        String quizName = quizService.findById(quizId).getName();
         //add list to the model
         model.addAttribute("questions",questionDtos);
         model.addAttribute("quizName",quizName);

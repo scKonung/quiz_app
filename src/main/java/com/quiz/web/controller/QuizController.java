@@ -106,6 +106,12 @@ public class QuizController {
         return "quiz_list";
     }
 
+    @GetMapping("/quiz{quizId}/game")
+    public String start(@PathVariable("quizId") long quizId, Model model){
+        model.addAttribute("quiz",quizService.findById(quizId));
+        return "quiz_game";
+    }
+
     //method for add attributes
     private void addQuizAndTypes(Model model, QuizDto quizDto){
         model.addAttribute("quiz",quizDto);
