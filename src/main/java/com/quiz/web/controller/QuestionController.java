@@ -86,4 +86,5 @@ public class QuestionController {
         questionService.delete(questionId);
         return "redirect:/quiz"+quizId+"/questions";
     }
+
 }

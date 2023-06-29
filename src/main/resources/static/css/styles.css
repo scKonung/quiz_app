@@ -10888,3 +10888,12 @@ header.masthead .bg-circle-4 {
     font-size: 4rem;
   }
 }
+
+.transparent-input {
+  opacity: 0.8;
+}
+
+.no-found-text {
+  font-size: 1.2rem;
+  text-align: center;
+}

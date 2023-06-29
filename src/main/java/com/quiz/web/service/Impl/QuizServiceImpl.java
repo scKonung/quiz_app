@@ -76,4 +76,10 @@ public class QuizServiceImpl implements QuizService {
     public void delete(long id) {
         quizRepository.deleteById(id);
     }
+
+    @Override
+    public List<QuizDto> searchByName(String query) {
+        List<Quiz> quizzes = quizRepository.searchQuizByName(query);
+        return quizzes.stream().map(Mapper::mapToDto).collect(Collectors.toList());
+    }
 }

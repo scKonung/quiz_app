@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @Controller
 public class QuizController {
@@ -96,6 +98,15 @@ public class QuizController {
         return "redirect:/quizzes";
     }
 
+    //get a list of quizzes by name
+    @GetMapping("/quizzes/search")
+    public String searchByName(@RequestParam(value = "query") String query,
+                               Model model) {
+        model.addAttribute("quizzes", quizService.searchByName(query));
+        return "quiz_list";
+    }
+
+    //method for add attributes
     private void addQuizAndTypes(Model model, QuizDto quizDto){
         model.addAttribute("quiz",quizDto);
         model.addAttribute("types",quizService.findAllTypes());

@@ -20,4 +20,7 @@ public interface QuizService {
     void update(QuizDto quizDto);
     //delete method
     void delete(long id);
+
+    //seacrh object by name
+    List<QuizDto> searchByName(String query);
 }

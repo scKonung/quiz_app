@@ -10,15 +10,19 @@
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
             <h1 class="display-4 fw-bolder">Find your Quiz</h1>
-            <p class="lead fw-normal text-white-50 mb-0">Explore your possibilities.</p>
+            <p class="lead fw-normal text-white-50 mb-3">Explore your possibilities.</p>
+            <form th:action="@{/quizzes/search}" class="form-inline my-2 my-lg-0 mb-3">
+                <input name="query" class="form-control me-sm-2 mb-5 transparent-input" type="search" placeholder="Search quiz" aria-label="Search">
+            </form>
         </div>
     </div>
 </header>
 <!-- Section-->
-<section  class="py-5">
-    <div class="container px-4 px-lg-5 mt-5 ">
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <div th:each="quiz :${quizzes}" class="col mb-5 ">
+            <p class="col mb-5 text-center no-found-text" th:if="${quizzes.isEmpty()}">Sorry, can't find this quiz:(</p>
+            <div th:each="quiz :${quizzes}" class="col mb-5">
                 <div class="card h-100">
                     <!-- Quiz image-->
                     <img class="card-img-top" th:src="${quiz.photoUrl}" alt="..." />
@@ -29,25 +33,26 @@
                             <h5 class="fw-bolder" th:text="${quiz.name}"></h5>
                             Type:
                         </div>
-                        <div class="container"  >
-                            <div th:each="type, iStat :${quiz.types}" >
-                            <div class="col ">
-                                <div class="card h-auto float-lg-start m-1 text-center" >
-                                    <!-- Quiz types-->
-                                    <p th:text="${type.name}" class="m-lg-1" th:if="${iStat.count}<4"></p>
-                                    <p class="m-lg-1" th:if="${iStat.count}>3">. . .</p></div>
-
-                            </div>
+                        <div class="container">
+                            <div th:each="type, iStat :${quiz.types}">
+                                <div class="col">
+                                    <div class="card h-auto float-lg-start m-1 text-center">
+                                        <!-- Quiz types-->
+                                        <p th:text="${type.name}" class="m-lg-1" th:if="${iStat.count}<4"></p>
+                                        <p class="m-lg-1" th:if="${iStat.count}>3">. . .</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- Quiz actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a th:href="@{/quizzes/{quizId}(quizId=${quiz.id})}" class="btn btn-outline-dark mt-auto" >View</a></div>
+                        <div class="text-center">
+                            <a th:href="@{/quizzes/{quizId}(quizId=${quiz.id})}" class="btn btn-outline-dark mt-auto">View</a>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </section>
